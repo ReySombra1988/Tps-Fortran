@@ -4,4 +4,5 @@ program pepe
     a=1
     b=2
     print*, a, b
+    print*, "Hola mundo"
 end program pepe
