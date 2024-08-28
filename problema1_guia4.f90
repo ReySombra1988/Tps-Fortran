@@ -1,21 +1,20 @@
 program problema1_guia4
     integer, parameter::n=200
-    integer k
+    integer i, ndatos
     real*8 x(n), sumneg, sumpos, cantneg, cantpos, prompos, promneg
     cantneg=0
     cantpos=0
     sumneg=0
     sumpos=0
-    k=11
  open (11, file="vector1.txt")   
  read(11,*)
  read(11,*) ndatos
  read(11,*)
- do i=1,ndatos
+ do i = 1, ndatos
     read(11,*) x(i)
  end do
  close (11)
-do = j, k
+do i = 1, ndatos
     if (x(i)<0) then
         cantneg=cantneg+1
         sumneg=sumneg+x(i)

@@ -1,0 +1,3 @@
+ Este es un archivo de texto creado con Fortran.
+ Cada línea es escrita con una instrucción WRITE.
+ Fortran puede manejar archivos fácilmente.

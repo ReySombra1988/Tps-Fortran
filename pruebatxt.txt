@@ -1,0 +1,4 @@
+rojo uno
+azul uno
+violeta dos
+roza dos
