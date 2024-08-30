@@ -1,21 +1,36 @@
-program txt_to_bin
-    implicit NONE
-    integer :: ios, ndatos,  i
-    character(len=100) :: data
-    ndatos=3
-    open (11, file="vector3.txt", status = "old", action="read", iostat=ios)
-if (ios /=0) then
-    print*, "error al abrir el archivo de texto"
-    stop
-end if
-open(12, file="texto.bin", form="unformatted", status="replace", action="write")
+program bin_to_text
+    implicit none
+    integer :: ios, i, len_line
+    integer :: ascii_val
+    character(len=100) :: line
+    integer :: j
 
-do i = 1, ndatos
-    read(11, '(A)', iostat=ios) data
-    if (ios /= 0) exit
-    write(12) data
-end do
+    open(11, file="texto.bin", form="unformatted", status="old", action="read", iostat=ios)
+    if (ios /= 0) then
+        print*, "Error al abrir el archivo binario"
+        stop
+    end if
 
-close(11)
-close(12)
-    end program txt_to_bin
+    open(12, file="texto.txt", status="replace", action="write")
+
+    ! Leer longitud de cada línea y luego la línea en sí
+    do
+        read(11, iostat=ios) len_line
+        if (ios /= 0) exit
+        
+        ! Leer cada valor ASCII y construir la línea
+        line = ' '  ! Inicializar línea con espacios
+        do j = 1, len_line
+            read(11, iostat=ios) ascii_val
+            if (ios /= 0) exit
+            line(j:j) = achar(ascii_val)
+        end do
+        
+        ! Escribir la línea en el archivo de texto
+        write(12, '(A)') trim(line)
+    end do
+
+    close(11)
+    close(12)
+    print*, "Archivo de texto creado correctamente."
+end program bin_to_text

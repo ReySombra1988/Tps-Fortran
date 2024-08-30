@@ -1,7 +1,7 @@
 program random_number
     implicit none
     integer, parameter:: n=200
-    integer i, j, ndatos
+    integer i, j, ndatos, ios
     real*8 x(n)
     logical acceso
     real :: aleatorio_real, aux
@@ -12,6 +12,7 @@ program random_number
     adm=char(173)
     oo=char(162)
     aa=char(160)
+    ndatos=0
 texto= "A continuaci" //oo// "n deber" //aa// " ingresar su vector en el archivo de texto que se le proporcionar" //aa 
 print"(A)", texto
 print"(A)","Guarde y cierre el archivo al terminar"
@@ -20,8 +21,16 @@ read*, dummy
 CALL SYSTEM('vector1.txt')
     open (11, file="vector1.txt")   
     read(11,*)
-    read(11,*) ndatos
+    do
+        read(11,*, iostat=ios) aux
+        if (ios /= 0) exit
+       ndatos=ndatos+1
+           end do 
+close (11)
+
+open (11, file="vector1.txt")   
     read(11,*)
+    
     do i = 1, ndatos
        read(11,*) x(i)
     end do
