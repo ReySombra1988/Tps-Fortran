@@ -8,10 +8,30 @@ program laberinto
     CHARACTER(LEN=100) :: egresos (m)
     CHARACTER(LEN=100) :: ingresos (m)
     CHARACTER(LEN=100) :: comandos (m) 
-    CHARACTER(LEN=300) :: frases (m)
+    CHARACTER(LEN=200) :: frases (m)
+    character(len=:), allocatable :: cadena_sin_espacios
     character(len=1) :: nom1(n), nom2(n), nom3(n)
     character(len=3) :: sal2(n), com(n), desc(n), sal3(n), hab(n), res, aux, j
     character(len=100) :: comand, descno, descsu, desces, descoe, descar, descab, irno, irsu, ires,  iroe, irar, irab, dummy
+    integer :: ascii_val
+    integer :: len_comand
+    character(len=1) :: ene ! ñ
+    character(len=1) :: preg ! ¿
+    character(len=1) :: adm ! ¡
+    character(len=1) :: aa ! á
+    character(len=1) :: ee ! é
+    character(len=1) :: ii ! í
+    character(len=1) :: oo ! ó
+    character(len=1) :: uu ! ú
+    ene=char(164)
+    preg=char(168)
+    adm=char(173)
+    aa=char(160)
+    ee=char(130)
+    ii=char(161)
+    oo=char(162)
+    uu=char(163)
+    
     hab= (/"1","2","3","4","5","6"/)
     sal2= (/"e", "1", "2", "3", "4", "5"/)
     sal3= (/"2", "3", "4", "5", "6", "s"/)
@@ -19,29 +39,29 @@ program laberinto
     sal1=(/99,99,99,99,99,99/)
     habi= (/ 1, 2, 3, 4, 5, 6/)
     ndic=0
-    open (11, file="diccionario.txt")   
+    open (11, file="data/diccionario.txt")   
     do
         read(11,*, iostat=ios) aux
         if (ios /= 0) exit
        ndic=ndic+1
            end do 
            close (11)
-           open (11, file="diccionario.txt") 
+           open (11, file="data/diccionario.txt") 
            do i = 1, ndic
-            read(11,*) comandos (i), frases (i)
+            read(11, *) comandos (i), frases (i)
          end do
          close (11)
          ndic2=0
-         open (12, file="comandos.txt")   
+         open (12, file="data/comandos.txt")   
          do
              read(12,*, iostat=ios) aux
              if (ios /= 0) exit
             ndic2=ndic2+1
                 end do 
                 close (12)
-                open (12, file="comandos.txt") 
+                open (12, file="data/comandos.txt") 
                 do i = 1, ndic2
-                 read(12,*) ingresos (i), egresos (i)
+                    read(12,*) ingresos (i), egresos (i)
               end do
               close (12)
      
@@ -106,8 +126,9 @@ nom3(6)="s"
 
 
 print*
-print*, "LABERINTO DE TEXTO V1.02"
+print*, "LABERINTO DE TEXTO"
 print*, "Rey Sombra"
+print*, "V1.02 5/SEP/2024"
 print*
 print*, "ADVERTENCIA: Cada vez que ingreses al laberinto este habra cambiado completamente"
 print*, "Hay 131,621,703,842,267,136 combinaciones distintas del laberinto, y todas tienen solucion"
@@ -116,7 +137,6 @@ print*
 print*
 print*, "Te encuentras en un laberinto subterraneo lleno de salas identicas"
 print*,  "No sabes como llegaste hasta aqui, solo te queda buscar una salida"
-print*, "Podes usar los comandos ARRIBA, ABAJO, NORTE, SUR, ESTE, OESTE, MIRAR, SALIR y CERRAR. Asegurate de tipear bien el comando"
 print*
 comand="mirar"
 
@@ -161,7 +181,7 @@ if (comand/="frase") then
         select case (nom3(current_pos))
                     
         case ("s")
-            print*, "En esta habitacion se encuentra la salida!, puedes SALIR del laberinto"
+            print*, adm// "En esta habitacion se encuentra la salida!, podes SALIR del laberinto"
         case ("1")
             print*, descno
         case ("2")
@@ -181,7 +201,23 @@ end if
 
 ! el comando del jugador
 
-    read*, comand
+    read"(A)", comand
+comand= quitar_espacios(comand)
+
+! Convertir el primer carácter de la cadena a su valor ASCII
+ascii_val = iachar(comand(1:1))
+
+! Verificar si es el signo de pregunta de apertura
+if (ascii_val == 168) then
+    
+    ! Obtener la longitud de la cadena original
+    len_comand = len_trim(comand)
+
+    ! Desplazar el resto de la cadena (sin el primer carácter) a la variable comand
+    comand = comand(2:len_comand)
+
+end if
+
 
     DO i = 1, ndic
         IF (comand == comandos(i)) THEN
@@ -428,7 +464,7 @@ case ("abajo")
 case ("salir")
     if (nom3(current_pos)=="s") then
         print*
-        print*, "Ganaste, saliste del laberito"
+        print*, adm// "Ganaste, saliste del laberito!"
         print*, "Software desarrollado en FORTRAN por Lucas M. B. Borches"
         print*, "Ingrese cualquier tecla para salir"
         read*, dummy
@@ -450,7 +486,7 @@ case ("mirar")
     CASE DEFAULT
         print*
           PRINT *, "No entiendo ese comando"
-          print*, "Podes usar los comandos ARRIBA, ABAJO, NORTE, SUR, ESTE, OESTE, MIRAR, SALIR y CERRAR (en minusculas)"
+          print*, "Podes usar los comandos ARRIBA, ABAJO, NORTE, SUR, ESTE, OESTE, MIRAR, SALIR y CERRAR"
           print*
 end select
 
@@ -470,5 +506,26 @@ function generate_random_integer() result(aleatorio_entero)
     call random_number(aleatorio_real)
     aleatorio_entero = int(aleatorio_real * n) + 1
 end function generate_random_integer
+
+function quitar_espacios(str) result(str_sin_espacios)
+    implicit none
+    character(len=*), intent(in) :: str
+    character(len=:), allocatable :: str_sin_espacios
+    integer :: i, n
+    character(len=1) :: ch
+    character(len=len(str)) :: temporal
+
+    n = 0
+    do i = 1, len(str)
+        ch = str(i:i)
+        if (ch /= ' ') then
+            n = n + 1
+            temporal(n:n) = ch
+        end if
+    end do
+
+    ! Ajustar la longitud del resultado
+    str_sin_espacios = temporal(1:n)
+end function quitar_espacios
 
 end program laberinto
