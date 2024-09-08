@@ -3,7 +3,7 @@ program juegos_de_texto
     character(len=1) :: a
 
     do
-
+    print*
     print*, "JUEGOS DE TEXTO"
     print*
     print*, "Escape de la habitacion Nivel 1", "          1"

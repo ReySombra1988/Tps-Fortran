@@ -1,0 +1,13 @@
+Version 1.00
+Escape Rooms 1 y 2
+Laberinto de Texto solo con comandos necesarios
+
+Version 1.01
+Se añadieron comandos alternativos para los movimientos en el Laberinto
+
+Version 1.02
+Se añadieron respuestas a posibles comandos del jugador.
+Se soluciono el problema de los espacios en los comandos.
+Se agrego soporte para caracteres especiales.
+Se soluciono el problema de los signos de pregunta de apertura.
+Se añadio un Launcher para los 3 juegos.
