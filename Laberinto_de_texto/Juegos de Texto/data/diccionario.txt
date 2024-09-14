@@ -156,3 +156,6 @@
 "haycomidaaca?" "no mucha, pero si buscas bien, capaz encuentres algo interesante"
 "puedodescansar?" "si queres descansar, no hay apuro, aca el tiempo pasa diferente"
 "contameunchiste" "Por qué el libro de matemáticas estaba triste? Porque tenía demasiados problemas"
+"bien" "Que bueno, que siga asi"
+"mal" "Que pena, ojala mejore todo"
+"masomenos" "Todo va a mejorar :D"

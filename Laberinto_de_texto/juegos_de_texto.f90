@@ -25,7 +25,7 @@ program juegos_de_texto
     case("2")
         CALL SYSTEM('escaperoomlvl2')
     case("3")
-        CALL SYSTEM('laberinto002.exe')
+        CALL SYSTEM('laberinto005.exe')
     case("0")
         exit
     end select

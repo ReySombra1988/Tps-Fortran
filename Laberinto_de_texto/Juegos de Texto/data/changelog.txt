@@ -11,3 +11,20 @@ Se soluciono el problema de los espacios en los comandos.
 Se agrego soporte para caracteres especiales.
 Se soluciono el problema de los signos de pregunta de apertura.
 Se añadio un Launcher para los 3 juegos.
+
+Version 1.03 12/Sep/2024
+Se agregó sistema de dificultades
+Se arregló posible modo de encontrar la salida fácilmente.
+Agregado dev command
+Agregado contador de turnos
+
+Version 1.04 14/Sep/2024
+Se agrego sistema de guardado en txt
+Se agrego sistema de carga en txt
+
+Version 1.05 14/Sep/2024
+Se modifico el sistema de guardado de txt a bin
+Se soluciono problema de carga donde el juego creshea
+Se soluciono problema al ingresar un comando erroneo en la seleccion de dificultad
+Se modificaron leyendas para incluir las nuevas caracteristicas
+
